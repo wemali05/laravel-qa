@@ -16,7 +16,7 @@ class QuestionController extends Controller
      */
     public function index(Question $question)
     {
-        $questions = Question::latest()->paginate(5);
+        $questions = Question::with('user')->latest()->paginate(5);
         $truncated = Str::limit($question->body, 250);
 
 
