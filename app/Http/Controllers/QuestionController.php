@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Question;
-use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
 
@@ -17,8 +16,6 @@ class QuestionController extends Controller
     public function index(Question $question)
     {
         $questions = Question::with('user')->latest()->paginate(5);
-        $truncated = Str::limit($question->body, 250);
-
 
         return view('questions.index', compact('questions'));
     }
