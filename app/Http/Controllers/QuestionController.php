@@ -39,7 +39,7 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AskQuestionRequest $request)
+    public function store(AskQuestionRequest $request, Question $question)
     {
         $request->user()->questions()->create($request->only('title', 'body'));
 
@@ -65,7 +65,7 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+        return view('questions.edit', compact('question'));
     }
 
     /**
@@ -75,9 +75,11 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(AskQuestionRequest $request, Question $question)
     {
-        //
+        $question->update($request->only('title', 'body'));
+
+        return redirect('/questions')->with('success', 'Your question has been upadated');
     }
 
     /**
