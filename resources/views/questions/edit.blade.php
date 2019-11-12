@@ -20,7 +20,7 @@
 
                     <form action="{{ route('questions.update', $question->id) }}" method="POST">
                         @method('PUT')
-                        @include('questions._form', ['buttonText' => "Update Questiom"])
+                        @include('questions._form', ['buttonText' => "Update Question"])
                     </form>
                 </div>
             </div>
