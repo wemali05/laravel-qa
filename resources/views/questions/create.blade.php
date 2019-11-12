@@ -16,16 +16,18 @@
                 </div>
 
                 <div class="card-body">
+                    @include('layouts._message')
+
                     <form action="{{ route('questions.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="question-title">Question Title</label>
-                            <input type="text" name="title"
+                            <input type="text" name="title" value="{{ old('title') }}"
                                 class="form-control {{ $errors->has('title') ? 'is-invalid' : ''}}" id="question-title">
 
                             @if($errors->has('title'))
                             <div class="invalid-feedback">
-                                <strong>{{ $error->first('title') }}</strong>
+                                <strong>{{ $errors->first('title') }}</strong>
                             </div>
                             @endif
                         </div>
@@ -33,11 +35,11 @@
                             <label for="question-body">Describe Your question</label>
                             <textarea name="body" id="question-body"
                                 class="form-control {{ $errors->has('body') ? 'is-invalid' : ''}}" cols="30"
-                                rows="10"></textarea>
+                                rows="10">{{ old('body') }}</textarea>
 
                             @if($errors->has('body'))
                             <div class="invalid-feedback">
-                                <strong>{{ $error->first('body') }}</strong>
+                                <strong>{{ $errors->first('body') }}</strong>
                             </div>
                             @endif
                         </div>
