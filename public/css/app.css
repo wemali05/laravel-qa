@@ -17068,7 +17068,8 @@ form.form-delete {
   color: #ffed4a;
 }
 
-.vote-controls a.vote-accepted {
+.vote-controls a.vote-accepted,
+.vote-controls a.vote-accepted:hover {
   color: #38c172;
 }
 
