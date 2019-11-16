@@ -70,4 +70,31 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return  "https://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) . "?s=" . $size;
     }
+
+    public function voteQuestions()
+    {
+        return $this->morphedByMany(Question::class, 'votable');
+    }
+
+    public function voteAnswer()
+    {
+        return $this->morphedByMany(Answer::class, 'votable');
+    }
+
+    public function voteQuestion(Question $question, $vote)
+    {
+        $voteQuestion = $this->voteQuestions();
+        if ($voteQuestion->where('votable_id', $question->id)->exists()) {
+            $voteQuestion->updateExistingPivot($question, ['vote' => $vote]);
+        } else {
+            $voteQuestion->attach($question, ['vote' => $vote]);
+        }
+
+        $question->load('votes');
+        $downVote = (int) $question->downVotes()->sum('vote');
+        $upVote = (int) $question->upVotes()->sum('vote');
+
+        $question->votes_count = $upVote + $downVote;
+        $question->save();
+    }
 }
