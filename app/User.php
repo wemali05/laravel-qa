@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Answer;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -76,7 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->morphedByMany(Question::class, 'votable');
     }
 
-    public function voteAnswer()
+    public function voteAnswers()
     {
         return $this->morphedByMany(Answer::class, 'votable');
     }
@@ -96,5 +97,22 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $question->votes_count = $upVote + $downVote;
         $question->save();
+    }
+
+    public function voteAnswer(Answer $answer, $vote)
+    {
+        $voteAnswer = $this->voteAnswers();
+        if ($voteAnswer->where('votable_id', $answer->id)->exists()) {
+            $voteAnswer->updateExistingPivot($answer, ['vote' => $vote]);
+        } else {
+            $voteAnswer->attach($answer, ['vote' => $vote]);
+        }
+
+        $answer->load('votes');
+        $downVote = (int) $answer->downVotes()->sum('vote');
+        $upVote = (int) $answer->upVotes()->sum('vote');
+
+        $answer->votes_count = $upVote + $downVote;
+        $answer->save();
     }
 }
