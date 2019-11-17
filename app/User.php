@@ -85,34 +85,30 @@ class User extends Authenticatable implements MustVerifyEmail
     public function voteQuestion(Question $question, $vote)
     {
         $voteQuestion = $this->voteQuestions();
-        if ($voteQuestion->where('votable_id', $question->id)->exists()) {
-            $voteQuestion->updateExistingPivot($question, ['vote' => $vote]);
-        } else {
-            $voteQuestion->attach($question, ['vote' => $vote]);
-        }
-
-        $question->load('votes');
-        $downVote = (int) $question->downVotes()->sum('vote');
-        $upVote = (int) $question->upVotes()->sum('vote');
-
-        $question->votes_count = $upVote + $downVote;
-        $question->save();
+     
+        $this->_vote($voteQuestion, $question, $vote);
     }
 
     public function voteAnswer(Answer $answer, $vote)
     {
         $voteAnswer = $this->voteAnswers();
-        if ($voteAnswer->where('votable_id', $answer->id)->exists()) {
-            $voteAnswer->updateExistingPivot($answer, ['vote' => $vote]);
+
+        $this->_vote($voteAnswer, $answer, $vote);
+    }
+
+    private function _vote($relationship, $model, $vote)
+    {
+        if ($relationship->where('votable_id', $model->id)->exists()) {
+            $relationship->updateExistingPivot($model, ['vote' => $vote]);
         } else {
-            $voteAnswer->attach($answer, ['vote' => $vote]);
+            $relationship->attach($model, ['vote' => $vote]);
         }
 
-        $answer->load('votes');
-        $downVote = (int) $answer->downVotes()->sum('vote');
-        $upVote = (int) $answer->upVotes()->sum('vote');
+        $model->load('votes');
+        $downVote = (int) $model->downVotes()->sum('vote');
+        $upVote = (int) $model->upVotes()->sum('vote');
 
-        $answer->votes_count = $upVote + $downVote;
-        $answer->save();
+        $model->votes_count = $upVote + $downVote;
+        $model->save();
     }
 }

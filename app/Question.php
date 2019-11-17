@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+    use VotableTrait;
+
+
     protected $fillable = [ 'title', 'body' ];
 
     public function user()
@@ -24,10 +27,6 @@ class Question extends Model
         return $this->belongsToMany(User::class, 'favorites')->withTimestamps(); //$question->id, $user->id
     }
 
-    public function votes()
-    {
-        return $this->morphToMany(User::class, 'votable');
-    }
 
     public function isFavorited()
     {
@@ -81,15 +80,5 @@ class Question extends Model
     {
         $this->best_answer_id = $answer->id;
         $this->save();
-    }
-
-    public function upVotes()
-    {
-        return  $this->votes()->wherePivot('vote', 1);
-    }
-
-    public function downVotes()
-    {
-        return $this->votes()->wherePivot('vote', -1);
     }
 }
