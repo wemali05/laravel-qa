@@ -18,60 +18,24 @@
 
                     <hr>
                     <div class="media">
-                        <div class="d-fex flex-columns vote-controls">
-                            <a title="This is a useful question" class="vote-up {{ Auth::guest() ? 'off' : ''}}"
-                                onClick="event.preventDefault(); document.getElementById('up-vote-question-{{ $question->id }}').submit();">
-                                <i class="fa fa-caret-up fa-3x"></i>
-                            </a>
-                            <form action="/questions/{{ $question->id }}/vote" id="up-vote-question-{{ $question->id }}"
-                                method="post" display="none">
-                                @csrf
-                                <input type="hidden" name="vote" value="1">
-                            </form>
-                            <span class="votes-count">{{ $question->votes_count}}</span>
-                            <a title="This question is not usefull"
-                                class="vote-down off {{ Auth::guest() ? 'off' : ''}}"
-                                onClick="event.preventDefault(); document.getElementById('down-vote-question-{{ $question->id }}').submit();">
-                                <i class="fa fa-caret-down fa-3x"></i>
-                            </a>
-                            <form action="/questions/{{ $question->id }}/vote"
-                                id="down-vote-question-{{ $question->id }}" method="post" display="none">
-                                @csrf
-                                <input type="hidden" name="vote" value="-1">
-                            </form>
-                            <a title="Click to mark as favorite question(Click to undo)"
-                                class="favorite mt-2 {{ Auth::guest() ? 'off' : ($question->is_favorited ? 'favorited' : '') }}"
-                                onClick="event.preventDefault(); document.getElementById('favorite-question-{{ $question->id }}').submit();">
-                                <i class="fa fa-star fa-2x"></i>
-                                <span class="favorites-count">{{ $question->favorites_count }}</span>
-                            </a>
-                            <form action="/questions/{{ $question->id }}/favorites"
-                                id="favorite-question-{{ $question->id }}" method="post" display="none">
-                                @csrf
-                                @if($question->is_favorited)
-                                @method('DELETE')
-                                @endif
-                            </form>
-                            <a href=""></a>
-                        </div>
+                        @include('shared._vote', [
+                        'model' => $question
+                        ])
                         <div class="media-body">
                             {!! $question->body_html !!}
-                            <div class="float-right">
-                                <span class="text-muted">{{ $question->created_date}}</span>
-                                <div class="media mt-2">
-                                    <a href="{{ $question->user->url}}" class="pr-2">
-                                        <img src="{{ $question->user->avatar}}">
-                                    </a>
-                                    <div class="media-body mt-1">
-                                        <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
-                                    </div>
+                            <div class="row">
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                    @include('shared._author', [
+                                    'model' => $question,
+                                    'label' => 'asked'
+                                    ])
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
