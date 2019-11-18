@@ -72,9 +72,14 @@ class Question extends Model
         return 'unaswered';
     }
 
+    // public function setBodyHtmlAttributes($value)
+    // {
+    //     $this->attributes['body'] = clean($value);
+    // }
+
     public function getBodyHtmlAttribute()
     {
-        return \Parsedown::instance()->text($this->body);
+        return clean($this->htmlBody());
     }
 
     public function acceptBestAnswer(Answer $answer)
@@ -91,5 +96,18 @@ class Question extends Model
     public function downVotes()
     {
         return $this->votes()->wherePivot('vote', -1);
+    }
+
+    public function getExceptAttribute()
+    {
+        return $this->excerpt(250);
+    }
+    public function excerpt($length)
+    {
+        return str_limit(strip_tags($this->htmlBody()), $length);
+    }
+    private function htmlBody()
+    {
+        return \Parsedown::instance()->text($this->body);
     }
 }
