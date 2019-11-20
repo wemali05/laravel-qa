@@ -1851,6 +1851,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['answer'],
   data: function data() {
@@ -1881,7 +1883,7 @@ __webpack_require__.r(__webpack_exports__);
       return !this.canAccept && this.isBest;
     },
     classes: function classes() {
-      ['mt-2', this.isBest ? 'vote-accepted' : ''];
+      return ['mt-2', this.isBest ? 'vote-accepted' : ''];
     }
   }
 });
@@ -38050,7 +38052,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.authorize("accept", _vm.answer)
+    _vm.canAccept
       ? _c(
           "a",
           {
