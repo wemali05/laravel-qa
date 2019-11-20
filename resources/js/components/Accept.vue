@@ -43,7 +43,7 @@ export default {
             return ! this.canAccept && this.isBest;
         },
         classes(){
-            [
+            return [
                 'mt-2',
                 this.isBest ? 'vote-accepted' : ''
 

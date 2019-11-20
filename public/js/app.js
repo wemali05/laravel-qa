@@ -1881,7 +1881,7 @@ __webpack_require__.r(__webpack_exports__);
       return !this.canAccept && this.isBest;
     },
     classes: function classes() {
-      ['mt-2', this.isBest ? 'vote-accepted' : ''];
+      return ['mt-2', this.isBest ? 'vote-accepted' : ''];
     }
   }
 });
