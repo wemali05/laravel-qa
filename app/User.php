@@ -98,6 +98,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $question->votes_count = $upVote + $downVote;
         $question->save();
+
+        return $question->votes_count;
     }
 
     public function voteAnswer(Answer $answer, $vote)
@@ -115,5 +117,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $answer->votes_count = $upVote + $downVote;
         $answer->save();
+
+        return $answer->votes_count;
     }
 }
