@@ -1,12 +1,14 @@
 <template>
     <div>
-        <a v-if="authorize('accept', answer)" title="Mark this answer as best answer" :class="classes"
+        <a v-if="canAccept" title="Mark this answer as best answer"
+         :class="classes"
         @click.prevent="create"
         >
             <i class="fas fa-check fa-2x"></i>
         </a>
         
-        <a v-if="accepted" title="The owner of the answer accepted this answer as best answer" :class="classes">
+        <a v-if="accepted" title="The owner of the answer accepted this answer as best answer"
+         :class="classes">
             <i class=" fas fa-check fa-2x"></i>
         </a>
     </div>
@@ -40,10 +42,10 @@ export default {
             return this.authorize('accept', this.answer);
         },
         accepted(){
-            return ! this.canAccept && this.isBest;
+            return !this.canAccept && this.isBest;
         },
         classes(){
-            [
+          return  [
                 'mt-2',
                 this.isBest ? 'vote-accepted' : ''
 

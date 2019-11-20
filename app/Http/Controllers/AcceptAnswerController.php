@@ -15,7 +15,7 @@ class AcceptAnswerController extends Controller
 
         if (request()->expectsJson()) {
             return response()->json([
-                'message' => "You have accepted this answer as best anser"
+                'message' => "You have accepted this answer as best answer"
             ]);
         }
 
