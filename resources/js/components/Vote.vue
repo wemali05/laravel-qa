@@ -1,15 +1,12 @@
 <template>
 <div class="d-fex flex-columns vote-controls">
-    <a :title="title('up')" class="vote-up" 
-    @click.prevent="voteUp"
-    :class="classes">
-        <i class="fa fa-caret-up fa-3x"></i>
+    <a   @click.prevent="voteUp" :title="title('up')" 
+    class="vote-up"  :class="classes">
+    <i class="fa fa-caret-up fa-3x"></i>
     </a>
     <span class="votes-count">{{ count }}</span>
-    <a :title="title('down')" class="vote-down off" 
-      @click.prevent="voteDown"
-    :class="classes">
-        <i class="fa fa-caret-down fa-3x"></i>
+    <a  @click.prevent="voteDown" :title="title('down')" class="vote-down" :class="classes">
+    <i class="fa fa-caret-down fa-3x"></i>
     </a>
 
     <favorite  v-if="name === 'question'" :question="model"></favorite>
@@ -25,12 +22,18 @@ export default {
     props: ['name', 'model'],
 
      computed: {
-        classes(){
-            return this.signedIn ? '' : 'off'
+        classes () {
+            return this.signedIn ? '' : 'off';
         },
+
         endpoint(){
             return `/${this.name}s/${this.id}/vote`;
         }
+    },
+
+    components: {
+        Favorite,
+        Accept
     },
 
     data() {
@@ -40,13 +43,8 @@ export default {
         }
     },
 
-    components:{
-        Favorite,
-        Accept
-    },
-
     methods: {
-        title(voteType){
+        title (voteType) {
             let titles = {
                 up: `This  ${this.name} is  useful`,
                 down: `This  ${this.name} is not  useful`
@@ -54,18 +52,20 @@ export default {
             return titles[voteType];
         },
 
-        voteUp(){
+        voteUp () {
             this._vote(1);
         },
-         voteDown(){
+
+        voteDown () {
             this._vote(-1);
         },
-        _vote(vote){
-            if(! this.signedIn){
+        _vote (vote) {
+            if(! this.signedIn) {
                 this.$toast.warning(`Please login to vote this ${this.name}`, "Warning", {
                     timeout: 3000,
                     position: 'bottomLeft'
                 });
+
                 return;
             }
             axios.post(this.endpoint, { vote })
@@ -77,10 +77,8 @@ export default {
                     this.count = res.data.votesCount;
                 })
         }
-    },
-
-   
-    
+    }
+ 
 }
 </script>
 
