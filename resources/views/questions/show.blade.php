@@ -39,11 +39,9 @@
         </div>
     </div>
 
-    @include ('answers._index', [
-    'answers' => $question->answers,
-    'answersCount' => $question->answers_count,
-    ])
+    <answers :answers="{{ $question->answers}}" :count="{{ $question->answers_count}}">
+        </answer>
 
-    @include('answers._create')
+        @include('answers._create')
 </div>
 @endsection
