@@ -39,9 +39,10 @@
         </div>
     </div>
 
-    <answers :answers="{{ $question->answers}}" :count="{{ $question->answers_count}}">
-        </answer>
 
-        @include('answers._create')
+    <answers :question="{{ $question }}"></answers>
+
+
+    @include('answers._create')
 </div>
 @endsection
