@@ -1,5 +1,8 @@
 // Body
-$body-bg: #f8fafc;
+$color-white: #fff;
+$body-bg: $color-white;
+
+// $body-bg: #f8fafc;
 
 // Typography
 $font-family-sans-serif: 'Nunito',
@@ -20,4 +23,3 @@ $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
 $color-green: rgb(95, 187, 126);
-$color-white: #fff;
