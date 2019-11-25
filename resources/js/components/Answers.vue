@@ -38,6 +38,7 @@ export default {
             questionId: this.question.id,
             count: this.question.answers_count,
             answers: [],
+            answersIds: [],
             nextUrl: null
 
         }
@@ -62,10 +63,18 @@ export default {
         },
 
         fetch(endpoint){
+            this.answerIds = [];
             axios.get(endpoint)
             .then(({ data }) => {
+                this.answerIds = data.data.map( a => a.id);
+
                 this.answers.push(...data.data);
                 this.nextUrl = data.next_page_url;
+            })
+            .then(() => {
+                this.answerIds.forEach( id => {
+                    this.highlight(`answer-${id}`);
+                })
             })
         }
     },
