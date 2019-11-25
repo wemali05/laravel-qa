@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                 <form class="card-body" v-show="('authorize', question) && editing"  @submit.prevent="update">
+                 <form class="card-body" v-show="authorize('modify', question) && editing"  @submit.prevent="update">
                     <div class="card-title">
                         <input class="form-control form-control-lg" v-model="title" :disabled="isInvalid">
                     </div>
@@ -10,7 +10,7 @@
                     <div class="media">
                         <div class="media-body">
                             <div class="form-group">
-                            <m-editor :body="body">
+                            <m-editor :body="body" :name="uniqueName">
                                 <textarea rows="10" v-model="body" class="form-control" required></textarea>
                             </m-editor>    
                             </div>
@@ -55,9 +55,6 @@
     </div>
 </template>
 <script>
-import Vote from './Vote.vue';
-import UserInfo from './UserInfo.vue';
-import MEditor from './MEditor.vue';
 import modification from '../mixins/modification';
 
 
@@ -66,7 +63,6 @@ export default {
 
     mixins: [modification],
 
-    components: { Vote, UserInfo, MEditor },
 
     data(){
         return{
@@ -85,6 +81,10 @@ export default {
 
         endpoint(){
             return `/questions/${this.id}`;
+        },
+
+         uniqueName(){
+            return `question-${this.id}`;
         }
     },
 
