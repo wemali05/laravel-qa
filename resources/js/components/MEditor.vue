@@ -35,11 +35,6 @@ export default {
         }
     },
 
-
-    mounted() {
-        autosize(document.querySelector('textarea'));
-     },
-
    updated() {
         autosize(document.querySelector('textarea'));
    },
