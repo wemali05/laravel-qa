@@ -20,8 +20,11 @@
 </template>
 <script>
 import MarkdownIt from 'markdown-it';
+import prism from 'markdown-it-prism';
 import autosize from 'autosize';
+
 const md = new MarkdownIt();
+// md.use(prism);
 
 export default {
     props: ['body'],
@@ -32,12 +35,13 @@ export default {
         }
     },
 
+
     mounted() {
-        autosize(this.$el.querySelector('textarea'));
+        autosize(document.querySelector('textarea'));
      },
 
    updated() {
-        autosize(this.$el.querySelector('textarea'));
+        autosize(document.querySelector('textarea'));
    },
     
 }

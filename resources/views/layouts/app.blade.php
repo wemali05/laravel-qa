@@ -19,7 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/prismjs-themes/prism.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/prismjs-themes/prism-tomorrow.css') }}" rel="stylesheet">
 
 </head>
 
