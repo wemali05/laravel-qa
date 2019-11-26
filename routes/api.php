@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 Route::post('/token', 'Auth\loginController@getToken');
 Route::get('/questions', 'Api\QuestionsController@index');
 
+Route::get('/questions/{question}-{slug}', 'Api\QuestionDetailsController');
+
 Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('/questions', 'Api\QuestionsController')->except('index');
 });
