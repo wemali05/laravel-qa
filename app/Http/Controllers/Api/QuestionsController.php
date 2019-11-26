@@ -46,7 +46,12 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        return response()->json([
+            'title' => $question->title,
+            'body' => $question->body,
+            'body_html' => $question->body_html,
+    
+        ]);
     }
 
     /**
@@ -56,9 +61,16 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(AskQuestionRequest $request, Question $question)
     {
-        //
+        $this->authorize('update', $question);
+
+        $question->update($request->only('title', 'body'));
+
+        return response()->json([
+                'message' =>  'Your question has been upadated',
+                'body_html' => $question->body_html
+        ]);
     }
 
     /**
@@ -69,6 +81,12 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $this->authorize('delete', $question);
+     
+        $question->delete();
+   
+        return response()->json([
+                'message' => "Your message has been deleted successfuly!!"
+            ]);
     }
 }
