@@ -38,20 +38,4 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
-    public function getToken(Request $request)
-    {
-        $request->request->add([
-            'grant_type' => 'password',
-            'client_id' => 2,
-            'client_secret' => 'gnpvq30hvPJgqMU7TLQ1DeRUVSgv71tSIiiD08UM',
-            'username' => $request->username,
-            'password' => $request->password
-        ]);
-
-        $requestToken = Request::create(env('APP_URL') . '/oauth/token', 'post');
-        $response = Route::dispatch($requestToken);
-
-        return $response;
-    }
 }
