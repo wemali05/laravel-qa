@@ -56,8 +56,37 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongstoMany(Question::class, 'favorites')->withTimestamps();//$question->id, $user->id
     }
 
-
-
+    public function posts()
+    {
+        $type = request()->get('type');
+        if ($type === 'questions') {
+            $posts = $this->questions()->get();
+        } else {
+            $posts = $this->answers()->with('question')->get();
+            if ($type !== 'answers') {
+                $posts2 = $this->questions()->get();
+                $posts = $posts->merge($posts2);
+            }
+        }
+        $data = collect();
+        foreach ($posts as $post) {
+            $item = [
+                'votes_count' => $post->votes_count,
+                'created_at' => $post->created_at->format('M d Y')
+            ];
+            if ($post instanceof Answer) {
+                $item['type'] = 'A';
+                $item['title'] = optional($post->question)->title;
+                $item['accepted'] =optional($post->question)->best_answer_id === $post->id ? true : false;
+            } elseif ($post instanceof Question) {
+                $item['type'] = 'Q';
+                $item['title'] = $post->title;
+                $item['accepted'] = (bool) $post->best_answer_id;
+            }
+            $data->push($item);
+        }
+        return $data->sortByDesc('votes_count')->values()->all();
+    }
    
     public function getUrlAttribute()
     {
