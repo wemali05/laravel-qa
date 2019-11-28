@@ -10,12 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes(['verify' => true]);
 
+Route::view('/{any}', 'spa')->where('any', '.*');
 Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['verify' => true]);
 
 Route::get('/', 'QuestionController@index');
 
