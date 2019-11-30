@@ -1,5 +1,8 @@
 const mix = require('laravel-mix');
 
+// mix.webpackConfig({
+//     devtool: 'inline-source-map'
+// })
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -13,4 +16,5 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .copy('node_modules/prismjs/themes', 'public/css/prismjs-themes')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .sourceMaps(true, 'source-map');
