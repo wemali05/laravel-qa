@@ -72245,3 +72245,4 @@ module.exports = __webpack_require__(/*! /Users/user/Documents/laravel-qa/resour
 /***/ })
 
 /******/ });
+//# sourceMappingURL=app.js.map
