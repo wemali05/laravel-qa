@@ -15,7 +15,9 @@
       </div>
       <div class="media-body">
           <div class="d-flex align-items-center">
-              <h3 class="mt-0"> <a href="#"> {{ question.title }} </a></h3>
+              <h3 class="mt-0"> 
+                   <router-link :to="{ name: 'question.show', params: { slug:question.slug}}"> {{ question.title }} </router-link>
+              </h3>
               <div class="ml-auto">
 
                  <router-link  :to="{ name: 'questions.edit', params: { id: question.id } }" 
@@ -49,7 +51,7 @@ export default {
         str_plural(str, count){
             return str + (count> 1 ? 's' : '');
         },
-        delete () {
+        destroy () {
             axios.delete("/questions/" + this.question.id)
                 .then(({data}) => {
                     this.$toast.success(data.message, "Success", { timeout: 2000 });
