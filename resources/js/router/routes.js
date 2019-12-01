@@ -3,11 +3,10 @@ import QuestionPage from '../pages/QuestionPage';
 import QuestionsPage from '../pages/QuestionsPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import CreateQuestionPage from '../pages/CreateQuestionPage';
+import EditQuestionPage from '../pages/EditQuestionPage.vue'
 
 
-
-const routes = [
-    {
+const routes = [{
         path: '/',
         component: QuestionsPage,
         name: 'home'
@@ -17,10 +16,15 @@ const routes = [
         component: QuestionsPage,
         name: 'questions'
     },
-     {
+    {
         path: '/questions/create',
         component: CreateQuestionPage,
         name: 'questions.create'
+    },
+    {
+        path: '/questions/:id/edit',
+        component: EditQuestionPage,
+        name: 'questions.edit'
     },
     {
         path: '/my-posts',
