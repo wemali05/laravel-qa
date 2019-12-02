@@ -19,7 +19,10 @@ class QuestionsController extends Controller
     {
         $questions = Question::with('user')->latest()->paginate(5);
 
+        // if (env('APP_ENV') == 'local')  sleep(2);
 
+        sleep(2);
+        
         return  QuestionResource::collection($questions);
     }
 
@@ -33,6 +36,9 @@ class QuestionsController extends Controller
     {
         $question = $request->user()->questions()->create($request->only('title', 'body'));
 
+        sleep(2);
+
+        
         return response()->json([
             'message' => "Your message has been submited",
             'question' => new QuestionResource($question)
@@ -86,6 +92,8 @@ class QuestionsController extends Controller
      
         $question->delete();
    
+        sleep(2);
+    
         return response()->json([
                 'message' => "Your message has been deleted successfuly!!"
             ]);

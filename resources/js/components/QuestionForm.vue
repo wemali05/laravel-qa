@@ -3,7 +3,7 @@
         <div class="form-group">
             <label for="question-title">Question Title</label>
             <input type="text" name="title" v-model="title" :class="errorClass('title')">
-
+              
             <div v-if="typeof errors != 'undefined' && errors['title'][0]" class="invalid-feedback">
                 <strong>{{ errors['title'][0] }}</strong>
             </div>
@@ -17,9 +17,13 @@
                     <strong>{{ errors['body'][0] }}</strong>
                 </div>
             </m-editor>
+           
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-outline-primary btn-lg">{{ buttonText }}</button>
+            <button type="submit" class="btn btn-outline-primary btn-lg">
+              <spinner :small="true" v-if="$root.loading"></spinner>
+               <span v-else> {{ buttonText }}</span>
+            </button>
         </div>
     </form>
 </template>
