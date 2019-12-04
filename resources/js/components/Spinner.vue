@@ -1,6 +1,6 @@
 <template>
      <div class="spinner" :style="getMinWidth">
-        <i class="fa fa-spinner fa-spin :class="sizeClass></i>
+        <i class="fa fa-spinner fa-spin" :class="sizeClass"></i>
     </div>
 </template>
 

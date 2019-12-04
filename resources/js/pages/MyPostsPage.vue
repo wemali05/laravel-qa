@@ -18,7 +18,7 @@
                     </div>
                     <div class="card-body">
                     <spinner v-if="$root.loading"></spinner>
-                        <ul class="list-group list-group-flush" v-if="post.length">
+                        <ul class="list-group list-group-flush" v-if="posts.length">
                             <li class="list-group-item" v-for="(post, index) in posts" :key="index">
                                 <div class="row">
                                     <div class="col">
@@ -26,11 +26,11 @@
                                          <span class="ml-4 votes-count" :class="{ accepted: post.accepted}">{{ post.votes_count}}</span>
                                     </div>
                                     <div class="col-md-9">{{ post.title }}</div>
-                                    <div col="col text-right">{{ post.created_at }}}</div>
+                                    <div col="col text-right">{{ post.created_at }}</div>
                                 </div>
                             </li> 
                         </ul>
-                        <div class="alert alert-warning">
+                        <div v-else class="alert alert-warning">
                             <p>You have no questions or answers</p>
                             <p>
                                 <router-link :to="{ name: 'questions.create'}"> Ask Questions</router-link>
@@ -77,7 +77,7 @@
 export default {
     data(){
         return{
-            post: []
+            posts: []
         }
     },
 
@@ -89,7 +89,7 @@ export default {
         fetchPosts(){
             axios.get(`/my-posts/`, {params: this.$route.query})
                 .then(({ data }) => {
-                    this.post = data.data
+                    this.posts = data.data
                 })
                 .catch(err => console.log(err))
         }
