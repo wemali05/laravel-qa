@@ -28,7 +28,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <router-link class="navbar-brand" :to="{ name: 'home'}"> Laravel Q/A</router-link>
-              
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="{{ __('Toggle navigation') }}">
@@ -43,11 +43,13 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        
-                        <router-link class="nav-item" tag="li" :to="{ name: 'questions'}"><a class="nav-link">Questions</a></router-link>
-                        <router-link class="nav-item" tag="li" :to="{ name: 'my-posts'}"><a class="nav-link">My Posts</a></router-link>
-                       
-                       
+
+                        <router-link class="nav-item" tag="li" :to="{ name: 'questions'}"><a
+                                class="nav-link">Questions</a></router-link>
+                        <router-link class="nav-item" tag="li" :to="{ name: 'my-posts'}"><a class="nav-link">My
+                                Posts</a></router-link>
+
+
 
                         <!-- Authentication Links -->
                         @guest
@@ -85,18 +87,20 @@
         </nav>
 
         <main class="py-4">
-            <router-view></router-view>
+            <transition name="fade" mode="out-in">
+                <router-view></router-view>
+            </transition>
         </main>
     </div>
     <script>
         window.Auth = @json([
-                'signedIn' => Auth::check(),
-                'user' => Auth::user(),
-            ]);
-            window.Urls = @json([
-                'api' => url('/api'),
-                'login' => route('login')
-            ]);
+            'signedIn' => Auth::check(),
+            'user' => Auth::user(),
+        ]);
+        window.Urls = @json([
+            'api' => url('/api'),
+            'login' => route('login')
+        ]);
     </script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
